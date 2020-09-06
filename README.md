@@ -1,5 +1,5 @@
 # python-controller
-This library allows communicating with controller using the UDP driver through the Gateway.
+This library allows communicating with a controller component using the UDP driver through the Gateway.
 
 # How to use it
 
