@@ -10,8 +10,6 @@ if __name__ == '__main__':
     _controller.start()
     inputs = [0, 0, 0, 0, 0, 0, 0, 0]
     outputs = [0, 0, 0, 0, 0, 0, 0, 0]
-    input_byte = 0
-    output_byte = 0
 
     def updateInputs():
         input_byte = _controller.getValue("inputs")
