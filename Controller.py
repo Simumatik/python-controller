@@ -80,7 +80,7 @@ class UDP_Controller(threading.Thread):
                 _data, _addr = _socket.recvfrom(self._max_size) # buffer size is 4096 bytes
                 if _addr != self._client_address:
                     self._client_address = _addr
-                    logging.info(f"New connection stablished: {self._client_address}")
+                    logging.info(f"New connection established: {self._client_address}")
                     
                 _recv_data = json.loads(_data.decode('utf-8'))
                 logging.debug(f"Data received: {_recv_data}")

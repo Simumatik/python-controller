@@ -12,7 +12,7 @@ Create an instance of UDP_Controller and then add the variables that you have us
     _controller.addVariable("inputs", "byte", 0)
     _controller.addVariable("outputs", "byte", 0)
 
-Once the stup is completed you should call 'start()' to enable the controller.
+Once the setup is completed you should call 'start()' to enable the controller.
 
     _controller.start()
 
