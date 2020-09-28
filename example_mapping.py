@@ -8,9 +8,14 @@ if __name__ == '__main__':
     _controller.addVariable("outputs", "byte", 0)
     _controller.start()
 
+    H01 = H02 = H03 = False
+    
     while True:
 
-        value = _controller.getValue("inputs")
-        _controller.setValue("outputs", value)
+        [_, _, _, _, _, S03, S02, S01] = _controller.getMappedValue("inputs")
+        H01 = S01
+        H02 = not S03 and S02
+        H03 = S03 or S02
+        _controller.setMappedValue("outputs", [_, _, _, _, _, H03, H02, H01])
         
         time.sleep(1e-5)
