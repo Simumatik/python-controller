@@ -52,7 +52,7 @@ The next example code sets the 'inputs' value to the 'outputs' value:
 
 ## Example code with mapping (see example_mapping.py):
 
-The next example code activates the output signals one after each other:
+The next example code shows the use of value mapping methods:
 
     import time
     from Controller import UDP_Controller
