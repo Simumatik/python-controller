@@ -15,7 +15,20 @@ class DataType(str, Enum):
     INT = 'int'
     FLOAT = 'float'
     STRING = 'str'
-    
+
+def bitLength(datatype):
+    if datatype == DataType.BYTE:
+        return 8
+    elif datatype == DataType.WORD:
+        return 16
+    elif datatype == DataType.DWORD:
+        return 32
+    elif datatype == DataType.QWORD:
+        return 64
+    else:
+        return 0
+        
+
 class UDP_Controller(threading.Thread):
 
     def __init__(self, ip:str="0.0.0.0", port:int=8400, max_size:int=1024, log_lever=logging.ERROR):
@@ -45,9 +58,34 @@ class UDP_Controller(threading.Thread):
             if send_update:
                 self._pending2send.update({name:new_value})
 
+    def setMappedValue(self, name:str, new_value:list=[], send_update=True):
+        mapped_value = 0
+        new_value.reverse()
+        while new_value:
+            bit = 1 if new_value.pop()==True else 0
+            mapped_value = mapped_value * 2 + bit
+        self.setValue(name, mapped_value, send_update)
+
     def getValue(self, name:str):
         assert name in self._variables, f"Variable {name} is not defined!"
         return self._variables[name]["value"]
+
+    def getMappedValue(self, name:str):
+        value = self.getValue(name)
+        datatype = self._variables[name]["datatype"]
+        if datatype == DataType.BOOL:
+            return [value]
+        elif datatype in [DataType.BYTE, DataType.WORD, DataType.DWORD, DataType.QWORD]:
+            bits = []
+            while value:
+                bits.append(value%2==1)
+                value = value>>1
+            bits += [False] * max(bitLength(datatype)-len(bits), 0)
+            bits.reverse()
+            return bits
+        else:
+            assert False, f"Datatype {datatype} cannot be mapped!"
+
 
     def checkValue(self, value:any, datatype:DataType):
         if datatype == DataType.BOOL:
