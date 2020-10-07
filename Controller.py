@@ -31,7 +31,7 @@ def bitLength(datatype):
 
 class UDP_Controller(threading.Thread):
 
-    def __init__(self, ip:str="0.0.0.0", port:int=8400, max_size:int=1024, log_lever=logging.ERROR):
+    def __init__(self, ip:str="0.0.0.0", port:int=8400, max_size:int=1024, log_lever=logging.INFO):
         logging.basicConfig(level=log_lever, format='%(asctime)-15s %(levelname)s %(name)s: %(message)s')
         self._ip = ip
         self._port = port
@@ -106,7 +106,7 @@ class UDP_Controller(threading.Thread):
         _socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         _socket.bind((self._ip, self._port))
         _socket.settimeout(0)
-        logging.debug(f"Controller UDP server listening: {self._ip}: {self._port}")
+        logging.info(f"Controller UDP server listening: {self._ip}: {self._port}")
         
         while self._running:
 
