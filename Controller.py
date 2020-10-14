@@ -119,7 +119,12 @@ class UDP_Controller(threading.Thread):
                 if _addr != self._client_address:
                     self._client_address = _addr
                     logging.info(f"New connection established: {self._client_address}")
-                    
+                    _socket.sendto(
+                        json.dumps({"poll":int(time.perf_counter())}).encode('utf-8'), 
+                        self._client_address
+                        )
+                    continue
+                   
                 _recv_data = json.loads(_data.decode('utf-8'))
                 logging.debug(f"Data received: {_recv_data}")
                     
